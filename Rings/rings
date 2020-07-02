@@ -1,0 +1,80 @@
+=============================================================================
+#                               Clock Rings Mod - Clock Ring
+# Date    : 24/09/2019
+# Author  : Tobias.Richter@de.ibm.com
+# Version : v1.0
+# License : Distributed under the terms of GNU GPL version 2 or later
+# 
+# Idea by Clock Rings by londonali1010 (2009), thanks for the inspiring. 
+# Overhaul with battery displayes instead of harddrive size / partition sizes 
+# and other stuff ...
+#
+#==============================================================================
+
+# -- Conky settings -- #
+background no
+update_interval 1
+ 
+cpu_avg_samples 2
+net_avg_samples 2
+ 
+override_utf8_locale yes
+ 
+double_buffer yes
+no_buffers yes
+ 
+text_buffer_size 2048
+imlib_cache_size 0
+ 
+# -- Window specifications -- #
+ 
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+own_window_argb_visual yes
+own_window_argb_value 0
+ 
+border_inner_margin 0
+border_outer_margin 0
+ 
+minimum_size 920 300
+maximum_width 1024
+ 
+alignment top_middle
+gap_x 0
+gap_y 60
+ 
+# -- Graphics settings -- #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+ 
+# -- Text settings -- #
+use_xft yes
+xftfont URW Bookman L, Medium Italic:size=18
+xftalpha 0.8
+ 
+uppercase no
+ 
+default_color FFFFFF
+
+# -- Lua Load -- #
+lua_load ./clock_rings.lua
+lua_draw_hook_pre clock_rings
+ 
+own_window_colour 000000
+
+TEXT
+#${font URW Bookman L, Medium Italic:size=12}  Root   ${fs_used /}/${fs_size /}                Home   ${fs_used /home}/${fs_size /home}$font
+${font URW Bookman L, Medium Italic:size=14:weight:bold} ${uid_name 1000} on ${nodename} for ${uptime}
+${voffset 105}${goto 123}${font URW Bookman L, Medium Italic:size=24}${time %H:%M}${voffset -10}${font URW Bookman L, Medium Italic:size=10}${font}
+${voffset 0}${goto 268}${hr 2}
+${voffset -74}${goto 279} ${cpugraph 50,280 ff0000 dcfd99 -l} 
+${voffset -46}${goto 278} ${color 3b1fcd}${execgraph perl ~/.conky/Rings/mem.pl -l}${color FFFFFF}${voffset 10}
+
+${voffset 0}${goto 285}${time %A, %d %B %Y}  				
+${font URW Bookman L, Medium Italic:size=12}${voffset -180}${goto 300}${color 77B753}Main     ${color FFFFFF}${battery_percent BAT0}% ${acpiacadapter} ${goto 300}${voffset 10}${battery_bar 1,306 BAT0}
+${font URW Bookman L, Medium Italic:size=12}${voffset 0}${goto 300}${color EF5A29}Extra     ${color FFFFFF}${battery_percent BAT1}% ${acpiacadapter} ${goto 300}${voffset 10}${battery_bar 1,306 BAT1}
+

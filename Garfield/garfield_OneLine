@@ -1,0 +1,60 @@
+#==============================================================================
+#                               garfield
+# Date    : 24/08/2019
+# Author  : Tobias.Richter@de.ibm.com
+# Version : v1.0
+# License : Distributed under the terms of GNU GPL version 2 or later
+# 
+# Simple daily PicDownLoader with config for Garfield Comic Strips. Hail to Jim Davis.
+# 
+#==============================================================================
+
+background yes
+update_interval 120
+
+override_utf8_locale yes
+ 
+double_buffer yes
+no_buffers yes
+ 
+text_buffer_size 2048
+imlib_cache_size 0
+
+# -- Window specifications -- #
+ 
+own_window yes
+own_window_type desktop
+own_window_transparent no
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+own_window_colour 000000
+own_window_argb_visual yes
+own_window_argb_value 200
+
+border_inner_margin 0
+border_outer_margin 0
+ 
+minimum_size 900 268
+
+alignment bottom_middle
+gap_x 440
+gap_y 150
+
+# -- Graphics settings -- #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# -- Text settings -- #
+use_xft yes
+xftfont URW Bookman L, Medium Italic:size=10
+xftalpha 0.8
+ 
+uppercase no
+ 
+default_color FFFFFF
+
+TEXT
+${execp ./picloader.sh ONELINE}
+${image ~/Pictures/Conky/Garfield/dailyconky-oneline.gif -s 900x268}
+
