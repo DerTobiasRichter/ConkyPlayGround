@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 ## Author: Tobias.Richter@de.ibm.com
-## Parse CPU Fan Speed
+## Parse available Memory in percent 
 use strict;
 
 
