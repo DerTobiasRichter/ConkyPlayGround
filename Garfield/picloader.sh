@@ -53,7 +53,7 @@ then
 			touch $OUTPUT_FOLDER/nogarfield.log
 			echo $IMAGEDATE > $OUTPUT_FOLDER/nogarfield.log
 		fi
-	else
+	#else
 		#echo "No Garfield today :("
 	fi
 fi
