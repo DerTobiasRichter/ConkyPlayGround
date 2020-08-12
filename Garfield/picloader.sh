@@ -20,7 +20,7 @@ FILEEXT='gif'
 URL=https://d1ejxu6vysztl5.cloudfront.net/comics/garfield/$IMAGEYEAR/$IMAGEDATE.$FILEEXT
 
 OUTPUT_FOLDER=~/Pictures/Conky/Garfield
-LOAD_GARFIELD_SINCE="2 year ago"
+LOAD_GARFIELD_SINCE="2 years ago"
 
 ###############################################################################
 # Script
@@ -35,17 +35,26 @@ fi
 # load lots of strips for endless fun
 if [ ! "$(find "$OUTPUT_FOLDER"  -mindepth 1 -print -quit 2>/dev/null)" ]
 then
-	echo "load last 2 years of Garfield" 
+	echo "load "LOAD_GARFIELD_SINCE" of Garfield" 
 	. picsucker.sh "$LOAD_GARFIELD_SINCE" "$OUTPUT_FOLDER"
 fi
 
 # load daily garfield
 if [ ! -f $OUTPUT_FOLDER/$IMAGEDATE.$FILEEXT ]
 then
-	curl -C - $URL --create-dirs -o $OUTPUT_FOLDER/$IMAGEDATE.$FILEEXT
-	if ! file $OUTPUT_FOLDER/$IMAGEDATE.$FILEEXT | grep -qE 'image|bitmap' || ! identify "$FILE" >/dev/null 2>&1
+	#echo "Found NoGarfield Date matches: "$(grep -c "$IMAGEDATE" $OUTPUT_FOLDER/nogarfield.log)
+	if [ ! "$(grep -c "$IMAGEDATE" $OUTPUT_FOLDER/nogarfield.log)" -ge 1 ]
 	then
-		rm -vf $OUTPUT_FOLDER/$IMAGEDATE.$FILEEXT
+		echo "curl: " $URL
+		curl -C - $URL --create-dirs -o $OUTPUT_FOLDER/$IMAGEDATE.$FILEEXT
+		if ! file $OUTPUT_FOLDER/$IMAGEDATE.$FILEEXT | grep -qE 'image|bitmap' || ! identify "$FILE" >/dev/null 2>&1
+		then
+			rm -vf $OUTPUT_FOLDER/$IMAGEDATE.$FILEEXT
+			touch $OUTPUT_FOLDER/nogarfield.log
+			echo $IMAGEDATE > $OUTPUT_FOLDER/nogarfield.log
+		fi
+	else
+		#echo "No Garfield today :("
 	fi
 fi
 
